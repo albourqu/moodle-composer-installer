@@ -6,20 +6,22 @@ use Composer\Package\PackageInterface;
 use Composer\Installer\LibraryInstaller;
 
 /**
- * Installs both Moodle and its plugins under web/ directory.
+ * Installs both Moodle and its plugins under moodle/ directory.
  *
  * Project file structure will become:
  *  - composer.json
  *  - composer.lock
  *  - vendor/
- *  - web/
+ *  - moodle/
  *
- * Moodle root will be located in the web/ directory, and it's
+ * Moodle root will be located in the moodle/ directory, and it's
  * plugins in corresponding type specific subdirectories such
- * as web/mod/ and web/local/.
+ * as moodle/mod/ and moodle/local/.
  */
 class MoodleInstaller extends LibraryInstaller {
-
+    protected const MOODLE_LOCATION = "moodle/";
+    protected const MOODLE_PLUGINTYPE = "moodle-";
+    
     /**
      * {@inheritDoc}
      */
@@ -27,7 +29,7 @@ class MoodleInstaller extends LibraryInstaller {
         $prettyName = $package->getPrettyName();
 
         if ($prettyName == 'moodle/moodle') {
-            return 'moodle/';
+            return self::MOODLE_LOCATION;
         }
 
         if (strpos($prettyName, '/') !== false) {
@@ -44,9 +46,9 @@ class MoodleInstaller extends LibraryInstaller {
             $availableVars['name'] = $extra['installer-name'];
         }
 
-        $pluginType = str_replace('moodle-', '', $package->getType());
+        $pluginType = str_replace(self::MOODLE_PLUGINTYPE, '', $package->getType());
 
-        return 'moodle/' . $this->templatePath($this->locations[$pluginType], $availableVars);
+        return self::MOODLE_LOCATION . $this->templatePath($this->locations[$pluginType], $availableVars);
     }
 
     /**
@@ -92,6 +94,7 @@ class MoodleInstaller extends LibraryInstaller {
         'assignment'         => 'mod/assignment/type/{$name}/',
         'assignsubmission'   => 'mod/assign/submission/{$name}/',
         'assignfeedback'     => 'mod/assign/feedback/{$name}/',
+        'antivirus'          => 'lib/antivirus/{$name}/',
         'auth'               => 'auth/{$name}/',
         'availability'       => 'availability/condition/{$name}/',
         'block'              => 'blocks/{$name}/',
@@ -99,9 +102,14 @@ class MoodleInstaller extends LibraryInstaller {
         'cachestore'         => 'cache/stores/{$name}/',
         'cachelock'          => 'cache/locks/{$name}/',
         'calendartype'       => 'calendar/type/{$name}/',
+        'customfield'        => 'customfield/field/{$name}/',
+        'fileconverter'      => 'files/converter/{$name}/',
         'format'             => 'course/format/{$name}/',
         'coursereport'       => 'course/report/{$name}/',
+        'contenttype'        => 'contentbank/contenttype/{$name}/',
+        'customcertelement'  => 'mod/customcert/element/{$name}/',
         'datafield'          => 'mod/data/field/{$name}/',
+        'dataformat'         => 'dataformat/{$name}/',
         'datapreset'         => 'mod/data/preset/{$name}/',
         'editor'             => 'lib/editor/{$name}/',
         'enrol'              => 'enrol/{$name}/',
@@ -114,8 +122,10 @@ class MoodleInstaller extends LibraryInstaller {
         'logstore'           => 'admin/tool/log/store/{$name}/',
         'ltisource'          => 'mod/lti/source/{$name}/',
         'ltiservice'         => 'mod/lti/service/{$name}/',
+        'media'              => 'media/player/{$name}/',
         'message'            => 'message/output/{$name}/',
         'mnetservice'        => 'mnet/service/{$name}/',
+        'paygw'              => 'payment/gateway/{$name}/',
         'plagiarism'         => 'plagiarism/{$name}/',
         'portfolio'          => 'portfolio/{$name}/',
         'qbehaviour'         => 'question/behaviour/{$name}/',
