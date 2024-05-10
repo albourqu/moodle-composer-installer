@@ -143,6 +143,7 @@ class MoodleInstaller extends LibraryInstaller {
         'webservice'         => 'webservice/{$name}/',
         'workshopallocation' => 'mod/workshop/allocation/{$name}/',
         'workshopeval'       => 'mod/workshop/eval/{$name}/',
-        'workshopform'       => 'mod/workshop/form/{$name}/'
+        'workshopform'       => 'mod/workshop/form/{$name}/',
+        'component-addon'    => 'lib/polyfills/',
     );
 }
