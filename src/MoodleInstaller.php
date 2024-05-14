@@ -21,12 +21,19 @@ use Composer\Installer\LibraryInstaller;
 class MoodleInstaller extends LibraryInstaller {
     protected const MOODLE_LOCATION = "moodle/";
     protected const MOODLE_PLUGINTYPE = "moodle-";
+    protected const NOCOMPOSER_TYPE = "package";
     
     /**
      * {@inheritDoc}
      */
     public function getInstallPath(PackageInterface $package) {
         $prettyName = $package->getPrettyName();
+
+        if($package->getType() == "package") {
+            var_dump($package);
+        }
+        
+
 
         if ($prettyName == 'moodle/moodle') {
             return self::MOODLE_LOCATION;
@@ -57,7 +64,7 @@ class MoodleInstaller extends LibraryInstaller {
     public function supports($packageType) {
         $prefix = substr($packageType, 0, 7);
 
-        if ($prefix == self::MOODLE_PLUGINTYPE) {
+        if ($prefix == self::MOODLE_PLUGINTYPE || self::NOCOMPOSER_TYPE) {
             return TRUE;
         }
 
