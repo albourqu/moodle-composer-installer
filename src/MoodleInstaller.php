@@ -29,12 +29,6 @@ class MoodleInstaller extends LibraryInstaller {
     public function getInstallPath(PackageInterface $package) {
         $prettyName = $package->getPrettyName();
 
-        if($package->getType() == "package") {
-            var_dump($package);
-        }
-        
-
-
         if ($prettyName == 'moodle/moodle') {
             return self::MOODLE_LOCATION;
         }
@@ -64,7 +58,7 @@ class MoodleInstaller extends LibraryInstaller {
     public function supports($packageType) {
         $prefix = substr($packageType, 0, 7);
 
-        if ($prefix == self::MOODLE_PLUGINTYPE || $packageType == self::NOCOMPOSER_TYPE) {
+        if ($prefix == self::MOODLE_PLUGINTYPE) {
             return TRUE;
         }
 
