@@ -64,7 +64,7 @@ class MoodleInstaller extends LibraryInstaller {
     public function supports($packageType) {
         $prefix = substr($packageType, 0, 7);
 
-        if ($prefix == self::MOODLE_PLUGINTYPE || self::NOCOMPOSER_TYPE) {
+        if ($prefix == self::MOODLE_PLUGINTYPE || $packageType == self::NOCOMPOSER_TYPE) {
             return TRUE;
         }
 
