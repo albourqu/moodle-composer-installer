@@ -21,7 +21,6 @@ use Composer\Installer\LibraryInstaller;
 class MoodleInstaller extends LibraryInstaller {
     protected const MOODLE_LOCATION = "moodle/";
     protected const MOODLE_PLUGINTYPE = "moodle-";
-    protected const NOCOMPOSER_TYPE = "package";
     
     /**
      * {@inheritDoc}
